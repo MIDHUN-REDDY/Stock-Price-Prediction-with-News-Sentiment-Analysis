@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction & News Sentiment Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1> Stock Price Prediction & News Sentiment Analysis</h1>
+            <p class="subtitle">AI-Powered Stock Prediction with Real-Time News Sentiment</p>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="input-container">
+                <label for="ticker-input">Enter Stock Ticker Symbol</label>
+                <div class="input-group">
+                    <input type="text" id="ticker-input" placeholder="e.g., AAPL, TSLA, MSFT, GOOGL" maxlength="10">
+                    <button id="predict-btn" onclick="predictStock()">
+                        <span id="btn-text">Predict</span>
+                        <span id="btn-loader" class="loader" style="display: none;"></span>
+                    </button>
+                </div>
+                <p class="input-hint">Enter a valid stock ticker symbol to get predictions and sentiment analysis</p>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <div id="results-section" style="display: none;">
+            <!-- Stock Information Card -->
+            <section class="info-card">
+                <div class="info-header">
+                    <h2 id="company-name">Company Name</h2>
+                    <span id="ticker-symbol" class="ticker-badge">TICKER</span>
+                </div>
+                <div class="info-details">
+                    <span id="exchange-info"></span>
+                </div>
+            </section>
+
+            <!-- Prediction Results -->
+            <section class="prediction-section">
+                <h2> Price Prediction</h2>
+                <div class="prediction-grid">
+                    <div class="prediction-card">
+                        <div class="card-label">Current Price</div>
+                        <div class="card-value" id="current-price">$0.00</div>
+                    </div>
+                    <div class="prediction-card highlight">
+                        <div class="card-label">Predicted Next-Day Price</div>
+                        <div class="card-value" id="predicted-price">$0.00</div>
+                    </div>
+                    <div class="prediction-card">
+                        <div class="card-label">Expected Change</div>
+                        <div class="card-value" id="price-change">$0.00 (0.00%)</div>
+                    </div>
+                    <div class="prediction-card">
+                        <div class="card-label">Model Accuracy</div>
+                        <div class="card-value" id="model-accuracy">0.00%</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chart Section -->
+            <section class="chart-section">
+                <h2> One-Year Historical Stock Prices</h2>
+                <div id="stock-chart"></div>
+            </section>
+
+            <!-- Sentiment Analysis Section -->
+            <section class="sentiment-section">
+                <h2> News Sentiment Analysis</h2>
+
+                <div class="sentiment-overview">
+                    <div class="sentiment-card positive">
+                        <div class="sentiment-icon">😊</div>
+                        <div class="sentiment-count" id="positive-count">0</div>
+                        <div class="sentiment-label">Positive</div>
+                    </div>
+                    <div class="sentiment-card neutral">
+                        <div class="sentiment-icon">😐</div>
+                        <div class="sentiment-count" id="neutral-count">0</div>
+                        <div class="sentiment-label">Neutral</div>
+                    </div>
+                    <div class="sentiment-card negative">
+                        <div class="sentiment-icon">😟</div>
+                        <div class="sentiment-count" id="negative-count">0</div>
+                        <div class="sentiment-label">Negative</div>
+                    </div>
+                </div>
+
+                <div class="sentiment-summary">
+                    <h3>Overall Sentiment</h3>
+                    <p id="sentiment-description">Analysis results will appear here</p>
+                </div>
+
+                <!-- News Articles -->
+                <div class="news-container">
+                    <!-- Positive News -->
+                    <div class="news-category">
+                        <h3 class="news-category-title positive"> Positive News</h3>
+                        <div id="positive-news" class="news-list">
+                            <p class="no-news">No positive news articles found</p>
+                        </div>
+                    </div>
+
+                    <!-- Negative News -->
+                    <div class="news-category">
+                        <h3 class="news-category-title negative"> Negative News</h3>
+                        <div id="negative-news" class="news-list">
+                            <p class="no-news">No negative news articles found</p>
+                        </div>
+                    </div>
+
+                    <!-- Neutral News -->
+                    <div class="news-category">
+                        <h3 class="news-category-title neutral">ℹ Neutral News</h3>
+                        <div id="neutral-news" class="news-list">
+                            <p class="no-news">No neutral news articles found</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Error Section -->
+        <div id="error-section" class="error-section" style="display: none;">
+            <div class="error-content">
+                <span class="error-icon"></span>
+                <p id="error-message">An error occurred</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by Yahoo Finance, News API, and Machine Learning</p>
+            <p class="disclaimer">Disclaimer: This is for educational purposes only. Not financial advice.</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
